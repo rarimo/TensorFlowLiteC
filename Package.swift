@@ -4,7 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "TensorFlowLiteC",
-    platforms: [.iOS(.v9)],
+    platforms: [.iOS(.v16)],
     products: [
         .library(
             name: "TensorFlowLiteC",
@@ -17,9 +17,9 @@ let package = Package(
         ),
     ],
     targets: [
-        .binaryTarget(name: "TensorFlowLiteC", url: "https://github.com/rarimo/TensorFlowLiteC/releases/download/v1.0.1/TensorFlowLiteC.xcframework.zip", checksum: "4c045d87414131dcba23206ba91be989f92a66650226442cc26afd0e9a538a28"),
-        .binaryTarget(name: "TensorFlowLiteCCoreML", url: "https://github.com/rarimo/TensorFlowLiteC/releases/download/v1.0.1/TensorFlowLiteCCoreML.xcframework.zip", checksum: "57193012aff350307ea2714a128444cbc4a40718107f55b5a60699c0482afd11"),
-        .binaryTarget(name: "TensorFlowLiteCMetal", url: "https://github.com/rarimo/TensorFlowLiteC/releases/download/v1.0.1/TensorFlowLiteCMetal.xcframework.zip", checksum: "e4fda10c4364fc46bb7d1a928c4f96a71ff2bbbacd40d4308571f832e410e757"),
+        .binaryTarget(name: "TensorFlowLiteC", url: "https://github.com/rarimo/TensorFlowLiteC/releases/download/v1.0.2/TensorFlowLiteC.xcframework.zip", checksum: "9346c784977b97b106df49640b9d128a039246c32f8053caf22fe9c79905def3"),
+        .binaryTarget(name: "TensorFlowLiteCCoreML", url: "https://github.com/rarimo/TensorFlowLiteC/releases/download/v1.0.2/TensorFlowLiteCCoreML.xcframework.zip", checksum: "5aa807205f50c2eeb60df9633a09003f833c3250d225bc1658063d97beac10fd"),
+        .binaryTarget(name: "TensorFlowLiteCMetal", url: "https://github.com/rarimo/TensorFlowLiteC/releases/download/v1.0.2/TensorFlowLiteCMetal.xcframework.zip", checksum: "0d977f33b35fefc37336e2e5b72abdd56c2c4727a227944e058278de0dd96539"),
         .target(name: "Link",
                 linkerSettings: [.linkedLibrary("c++")]),
     ]
