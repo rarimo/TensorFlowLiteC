@@ -1,0 +1,11 @@
+Frameworks
+*.xcframework
+.DS_Store
+/.build
+/Packages
+/*.xcodeproj
+xcuserdata/
+Pods
+Podfile
+Podfile.lock
+*.xcworkspace

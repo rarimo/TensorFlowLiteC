@@ -1,0 +1,63 @@
+name: Check
+
+on:
+  schedule:
+    - cron: "32 1 * * *"
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  nightly:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - run: sh Scripts/pod.sh 0.0.$(date -v -1d +%Y%m%d)
+      id: pod
+    - name: Create XCFrameworks and Package.swift
+      if: ${{ steps.pod.outputs.version }}
+      run: sh Scripts/all.sh ${{ steps.pod.outputs.version }}
+    - name: Commit
+      if: ${{ steps.pod.outputs.version }}
+      uses: EndBug/add-and-commit@v8
+      with:
+        add: 'Package.swift'
+        message: "add ${{ steps.pod.outputs.version }}"
+    - name: Release
+      if: ${{ steps.pod.outputs.version }}
+      uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "${{ steps.pod.outputs.version }}"
+        files: 'App/Pods/TensorFlowLiteC/Frameworks/*.zip'
+
+  release:
+
+    needs: nightly
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - run: git pull
+    - id: pod
+      run: sh Scripts/pod.sh
+    - name: Create XCFrameworks and Package.swift
+      if: ${{ steps.pod.outputs.version }}
+      run: sh Scripts/all.sh ${{ steps.pod.outputs.version }}
+    - name: Commit
+      if: ${{ steps.pod.outputs.version }}
+      uses: EndBug/add-and-commit@v8
+      with:
+        add: 'Package.swift'
+        message: "add ${{ steps.pod.outputs.version }}"
+    - name: Release
+      if: ${{ steps.pod.outputs.version }}
+      uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "${{ steps.pod.outputs.version }}"
+        files: 'App/Pods/TensorFlowLiteC/Frameworks/*.zip'
